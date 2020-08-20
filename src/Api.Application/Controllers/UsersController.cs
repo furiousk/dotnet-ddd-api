@@ -42,7 +42,7 @@ namespace src.Api.Application.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);//400 bad request - 
+                return BadRequest(ModelState);//400 bad request -
             }
             try
             {
@@ -102,6 +102,25 @@ namespace src.Api.Application.Controllers
                 {
                     return BadRequest();
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("v1/user/{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException ex)
             {
