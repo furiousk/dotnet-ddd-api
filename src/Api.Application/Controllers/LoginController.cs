@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using src.Api.Domain.Dtos;
 using src.Api.Domain.Interfaces.Services.User;
@@ -14,6 +15,8 @@ namespace src.Api.Application.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         [HttpPost]
         [Route("v1/login")]
         public async Task<object> Login([FromBody] LoginDto loginDto)

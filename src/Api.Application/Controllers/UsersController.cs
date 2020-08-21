@@ -1,7 +1,9 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using src.Api.Domain.Dtos.User;
 using src.Api.Domain.Entities;
 using src.Api.Domain.Interfaces.Services.User;
 
@@ -16,6 +18,7 @@ namespace src.Api.Application.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("v1/users")]
 
@@ -35,6 +38,7 @@ namespace src.Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("v1/user/{id}", Name = "GetByID")]
 
@@ -54,10 +58,11 @@ namespace src.Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPost]
         [Route("v1/user")]
 
-        public async Task<ActionResult> Post([FromBody] UserEntity user)
+        public async Task<ActionResult> Post([FromBody] UserDtoCreate user)
         {
             if (!ModelState.IsValid)
             {
@@ -82,9 +87,10 @@ namespace src.Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPut]
         [Route("v1/user")]
-        public async Task<ActionResult> Put([FromBody] UserEntity user)
+        public async Task<ActionResult> Put([FromBody] UserDtoUpdate user)
         {
             if (!ModelState.IsValid)
             {
@@ -109,6 +115,7 @@ namespace src.Api.Application.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpDelete]
         [Route("v1/user/{id}")]
         public async Task<ActionResult> Delete(Guid id)

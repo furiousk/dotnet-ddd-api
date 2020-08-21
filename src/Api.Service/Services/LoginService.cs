@@ -62,12 +62,16 @@ namespace src.Api.Service.Services
                     var expirationDate = createDate + TimeSpan.FromSeconds(_tokenConfigs.Seconds);
                     var handler = new JwtSecurityTokenHandler();
                     var token = CreateToken(identity, createDate, expirationDate, handler);
-                    return SuccessObject(createDate, expirationDate, token, user);
+                    return SuccessObject(createDate, expirationDate, token, baseUser);
                 }
             }
             else
             {
-                return null;
+                return new
+                {
+                    authenticated = false,
+                    message = "Falhou ao tentar logar!"
+                };
             }
         }
         private string CreateToken(ClaimsIdentity identity, DateTime createDate, DateTime expirationDate, JwtSecurityTokenHandler handler)
@@ -86,7 +90,7 @@ namespace src.Api.Service.Services
             return token;
         }
 
-        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, LoginDto user)
+        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, UserEntity user)
         {
             return new
             {
@@ -94,7 +98,8 @@ namespace src.Api.Service.Services
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = token,
-                userName = user.Email,
+                userName = user.Name,
+                userEmail = user.Email,
                 message = "Usuário Logado com sucesso"
             };
         }

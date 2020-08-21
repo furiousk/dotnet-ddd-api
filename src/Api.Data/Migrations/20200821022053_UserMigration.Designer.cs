@@ -9,7 +9,7 @@ using src.Api.Data.Context;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200819192451_UserMigration")]
+    [Migration("20200821022053_UserMigration")]
     partial class UserMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("src.Api.Data.Entities.UserEntity", b =>
+            modelBuilder.Entity("src.Api.Domain.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,6 +46,16 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2ebdf334-acd8-4ac9-8dfc-5371c8ce024e"),
+                            CreateAt = new DateTime(2020, 8, 20, 23, 20, 53, 379, DateTimeKind.Local).AddTicks(6670),
+                            Email = "furious@gmail.com",
+                            Name = "Administrador",
+                            UpdateAt = new DateTime(2020, 8, 20, 23, 20, 53, 413, DateTimeKind.Local).AddTicks(7800)
+                        });
                 });
 #pragma warning restore 612, 618
         }
