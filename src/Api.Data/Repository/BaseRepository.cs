@@ -36,6 +36,11 @@ namespace src.Api.Data.Interfaces
             }
         }
 
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _dataset.AnyAsync(p => p.Id.Equals(id));
+        }
+
         public async Task<T> InsertAsync(T item)
         {
             try
